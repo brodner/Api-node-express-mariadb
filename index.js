@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const app = express()
 const db = require("./models");
+const DbModels = require("./modelos/db.config")
 const PORT = process.env.PORT || 5000
 
 
@@ -23,7 +24,7 @@ const model = async () => {
     }
 
 }
-model()
+// model()
 
 const corsOption = {
     origin: "localhost:8081"
@@ -70,7 +71,9 @@ app.get("/clientes/:id", async (request, response) => {
 
 app.get("/clientes", async (request, response) => {
     try {
-        const objtsujeto = await db.sujetos.findAll()
+
+        //const objtsujeto = await db.sujetos.findAll()
+        const objtsujeto = await DbModels.tbcliente.findAll()
         response.json(
             objtsujeto
         )
