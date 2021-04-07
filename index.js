@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const app = express()
 const db = require("./models");
-const DbModels = require("./modelos/db.config")
+const DbModels = require("./modelos/db.config");
 const PORT = process.env.PORT || 5000
 
 
@@ -55,12 +55,25 @@ app.post("/clientes", async (req, res) => {
 });
 
 app.get("/clientes/:id", async (request, response) => {
-    const { id } = request.params
+    const {
+        id
+    } = request.params
 
     try {
-        const objtsujeto = await db.sujetos.findByPk(id)
+        const objtsujeto = await DbModels.tbcliente.findByPk(id,{
+            where: {
+                statuscli_id: 1
+            },
+            include: {
+                all: true,
+                attributes: {
+                    exclude: ['sucursal_token', 'tipoide_dsc']
+                }
+            }
+        })
+        // const objtsujeto = await db.sujetos.findByPk(id)
         const dataSujeto = await objtsujeto.dataValues
-        await console.log(dataSujeto);
+        // await console.log(dataSujeto);
         response.json(
             dataSujeto
         )
@@ -73,11 +86,22 @@ app.get("/clientes", async (request, response) => {
     try {
 
         //const objtsujeto = await db.sujetos.findAll()
-        const objtsujeto = await DbModels.tbcliente.findAll()
+        const objtsujeto = await DbModels.tbcliente.findAll({
+            where: {
+                statuscli_id: 1
+            },
+            include: {
+                all: true,
+                attributes: {
+                    exclude: ['sucursal_token', 'tipoide_dsc']
+                }
+            }
+        })
         response.json(
             objtsujeto
         )
     } catch (error) {
+        console.log(error);
         response.status(404).json(error)
     }
 });

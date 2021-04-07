@@ -1,1 +1,1 @@
-GET http://localhost:5000/clientes/2ba6da64-1480-425c-9f61-cff41d4925a9 HTTP/1.1
+GET http://localhost:5000/clientes/1 HTTP/1.1
