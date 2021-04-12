@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('tbcliente', {
     cliente_id: {
@@ -13,15 +13,45 @@ module.exports = function(sequelize, DataTypes) {
     },
     cliente_nombre1: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: {
+          args: [0, 100],
+          msg: 'El campo primer nombre debe contener mas de 2 caracteres o menor a 100'
+        },
+        notNull: {
+          msg: 'EL nombre es requerido'
+        }
+      }
     },
     cliente_ape1: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: {
+          args: [2, 100],
+          msg: 'El campo primer apellido debe contener mas de 2 caracteres o menor a 100'
+        },
+        notNull: {
+          msg: 'EL primer Apelido es requerido'
+        }
+      }
     },
     cliente_ape2: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: {
+          args: [2, 100],
+          msg: 'El campo segundo Apellido debe contener mas de 2 caracteres o menor a 100'
+        },
+        notNull: {
+          msg: 'EL segundo Apelido es requerido'
+        }
+      }
     },
     cliente_fcreacion: {
       type: DataTypes.DATEONLY,
@@ -29,7 +59,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     cliente_fnac: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'Ingresa una fecha con formato YYYY/MM/DD'
+        },
+        notNull: {
+          msg: 'la fecha de nacimiento es requerida'
+        }
+      }
     },
     statuscli_id: {
       type: DataTypes.INTEGER,
@@ -69,34 +107,34 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "cliente_id" },
+          { name: 'cliente_id' }
         ]
       },
       {
-        name: "status",
-        using: "BTREE",
+        name: 'status',
+        using: 'BTREE',
         fields: [
-          { name: "statuscli_id" },
+          { name: 'statuscli_id' }
         ]
       },
       {
-        name: "sucursal",
-        using: "BTREE",
+        name: 'sucursal',
+        using: 'BTREE',
         fields: [
-          { name: "sucursal_id" },
+          { name: 'sucursal_id' }
         ]
       },
       {
-        name: "tipo ide",
-        using: "BTREE",
+        name: 'tipo ide',
+        using: 'BTREE',
         fields: [
-          { name: "tipoide_id" },
+          { name: 'tipoide_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}

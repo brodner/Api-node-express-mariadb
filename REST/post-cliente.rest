@@ -1,10 +1,11 @@
-POST http://localhost:5000/clientes HTTP/1.1
+POST http://localhost:5000/clientes/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "primerNombre": "Brodner",
-    "segundoNombre": "",
-    "primerApellido": "Morales",
-    "segundoApellido": "",
-    "fechaNacimiento": "1992-12-25"
+    "id" : "21781889",
+    "nombres" : "",
+    "primerApellido" : "Morales",
+    "segundoApellido" : "Arevalo",
+    "fechaNacimiento" : "1992/02/01",
+    "tipoide" : 1
 }

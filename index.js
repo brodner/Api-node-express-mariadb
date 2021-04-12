@@ -2,55 +2,36 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const db = require('./models')
-const DbModels = require('./modelos/db.config')
+const {
+  DbModels,
+  sequelize
+} = require('./modelos/db.config')
 const PORT = process.env.PORT || 5000
-
-const model = async () => {
-  try {
-    await db.sequelize.sync({
-      // force: true
-    })
-    await db.fuentes.create({
-      origen: 'Primera Carga'
-    })
-
-    await db.estados.create({
-      estado: 'Activo'
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-// model()
-
-const corsOption = {
-  origin: 'localhost:8081'
-}
+const crearCliente = require('./controllers/clientes/crearCliente')
 app.use(cors())
 app.use(express.json())
 
-app.post('/clientes', async (req, res) => {
-  const contenido = req.body
+app.get('/', (request, response) => {
+  console.log(request.ip)
+  console.log(request.ips)
+  console.log(request.originalUrl)
+  response.send('<h1>API WEB BANCO DE VIVIENDA</h1>')
+})
+
+app.use(async (request, response, next) => {
   try {
-    console.log(contenido)
-    const Sujetos = await db.sujetos.create({
-      primerNombre: contenido.primerNombre,
-      segundoNombre: contenido.segundoNombre,
-      primerApellido: contenido.primerApellido,
-      segundoApellido: contenido.segundoApellido,
-      fechaNacimiento: contenido.fechaNacimiento
-    })
-    res.json({
-      message: 'Se inserto el cliente'
-    })
+    await sequelize.authenticate()
+    console.log('Connection has been established successfully.')
+    next()
   } catch (error) {
-    const objtError = error.message
-    res.status(404).json({
-      objtError
+    console.error('Unable to connect to the database:', error)
+    response.status(404).json({
+      msg: 'Unable to connect to the database contact with group data Base'
     })
   }
 })
+
+app.use('/clientes/', crearCliente)
 
 app.get('/clientes/:id', async (request, response) => {
   const {
@@ -69,9 +50,7 @@ app.get('/clientes/:id', async (request, response) => {
         }
       }
     })
-    // const objtsujeto = await db.sujetos.findByPk(id)
     const dataSujeto = await objtsujeto.dataValues
-    // await console.log(dataSujeto);
     response.json(
       dataSujeto
     )
@@ -82,7 +61,6 @@ app.get('/clientes/:id', async (request, response) => {
 
 app.get('/clientes', async (request, response) => {
   try {
-    // const objtsujeto = await db.sujetos.findAll()
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
         statuscli_id: 1

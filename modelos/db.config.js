@@ -18,4 +18,4 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const DbModels = initModels(sequelize)
 
-module.exports = DbModels
+module.exports = { DbModels, sequelize }
