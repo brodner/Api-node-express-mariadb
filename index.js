@@ -2,10 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const {
-  DbModels,
-  sequelize
-} = require('./modelos/db.config')
+const { DbModels, sequelize } = require('./modelos/db.config')
 const PORT = process.env.PORT || 5000
 const crearCliente = require('./controllers/clientes/crearCliente')
 app.use(cors())
@@ -41,7 +38,7 @@ app.get('/clientes/:id', async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findByPk(id, {
       where: {
-        statuscli_id: 1
+        statuscli_id: 5
       },
       include: {
         all: true,
@@ -63,7 +60,7 @@ app.get('/clientes', async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
-        statuscli_id: 1
+        statuscli_id: 5
       },
       include: {
         all: true,

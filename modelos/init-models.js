@@ -3,7 +3,6 @@ var _tbbitacora = require("./tbbitacora");
 var _tbcliente = require("./tbcliente");
 var _tbcliente_credito = require("./tbcliente_credito");
 var _tbcredito = require("./tbcredito");
-var _tbcredito_cuota = require("./tbcredito_cuota");
 var _tbcredito_movimientos = require("./tbcredito_movimientos");
 var _tbcredito_status = require("./tbcredito_status");
 var _tbstatus_cliente = require("./tbstatus_cliente");
@@ -16,7 +15,6 @@ function initModels(sequelize) {
   var tbcliente = _tbcliente(sequelize, DataTypes);
   var tbcliente_credito = _tbcliente_credito(sequelize, DataTypes);
   var tbcredito = _tbcredito(sequelize, DataTypes);
-  var tbcredito_cuota = _tbcredito_cuota(sequelize, DataTypes);
   var tbcredito_movimientos = _tbcredito_movimientos(sequelize, DataTypes);
   var tbcredito_status = _tbcredito_status(sequelize, DataTypes);
   var tbstatus_cliente = _tbstatus_cliente(sequelize, DataTypes);
@@ -48,7 +46,6 @@ function initModels(sequelize) {
     tbcliente,
     tbcliente_credito,
     tbcredito,
-    tbcredito_cuota,
     tbcredito_movimientos,
     tbcredito_status,
     tbstatus_cliente,

@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+const Sequelize = require('sequelize')
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('tbcliente_credito', {
     clientecred_id: {
       autoIncrement: true,
@@ -16,13 +16,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     clientecred_monto: {
-      type: DataTypes.FLOAT(10,2),
+      type: DataTypes.FLOAT(10, 2),
       allowNull: false
     },
     clientecred_cuotas: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      comment: "cantidad de cuotas del credito"
+      comment: 'cantidad de cuotas del credito'
     },
     clientecred_fupago: {
       type: DataTypes.DATEONLY,
@@ -56,16 +56,24 @@ module.exports = function(sequelize, DataTypes) {
         key: 'statuscred_id'
       }
     },
-    tbcliente_creditocol: {
-      type: DataTypes.STRING(45),
-      allowNull: true
+    clientecred_statusSolicitud: {
+      type: DataTypes.CHAR(1),
+      allowNull: false
     },
     clientecred_saldo: {
-      type: DataTypes.FLOAT(10,2),
+      type: DataTypes.FLOAT(10, 2),
       allowNull: false
     },
     clientecred_statusmora: {
       type: DataTypes.INTEGER.UNSIGNED.ZEROFILL,
+      allowNull: false
+    },
+    clientecred_fsolicitud: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    clientecred_sucursal: {
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
@@ -74,34 +82,34 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
+        using: 'BTREE',
         fields: [
-          { name: "clientecred_id" },
+          { name: 'clientecred_id' }
         ]
       },
       {
-        name: "cliente_id",
-        using: "BTREE",
+        name: 'cliente_id',
+        using: 'BTREE',
         fields: [
-          { name: "cliente_id" },
+          { name: 'cliente_id' }
         ]
       },
       {
-        name: "credito_id",
-        using: "BTREE",
+        name: 'credito_id',
+        using: 'BTREE',
         fields: [
-          { name: "credito_id" },
+          { name: 'credito_id' }
         ]
       },
       {
-        name: "statuscredito_id",
-        using: "BTREE",
+        name: 'statuscredito_id',
+        using: 'BTREE',
         fields: [
-          { name: "statuscred_id" },
+          { name: 'statuscred_id' }
         ]
-      },
+      }
     ]
-  });
-};
+  })
+}
