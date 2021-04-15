@@ -6,7 +6,7 @@ auth.all('/', async (request, response) => {
   try {
     const { token, user } = request.body
 
-    if (request.session.loggedin !== 'undefined' && session.loggedin) {
+    if (request.session.loggedin !== 'undefined' && request.session.loggedin) {
       response.status(200).json({
         msj: 'ya estas logueado'
       })
@@ -33,6 +33,9 @@ auth.all('/', async (request, response) => {
     })
 
     if (!sucursal) {
+      response.status(401).json({
+        msj: 'usuario o token incorrecto por favor verifica'
+      })
       throw new Error('no encontrado')
     }
     request.session.loggedin = true
