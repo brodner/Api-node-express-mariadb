@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "id" : "21781889",
-    "nombres" : "",
+    "nombres" : "Brodner",
     "primerApellido" : "Morales",
     "segundoApellido" : "Arevalo",
     "fechaNacimiento" : "1992/02/01",
