@@ -1,12 +1,25 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const cors = require('cors')
 const app = express()
 const { DbModels, sequelize } = require('./modelos/db.config')
-const PORT = process.env.PORT || 5000
 const crearCliente = require('./controllers/clientes/crearCliente')
+const auth = require('./controllers/usuarios/auth')
+
+const PORT = process.env.PORT || 5000
 app.use(cors())
+
+app.use(session({
+  secret: 'central Banco-Vivienda',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
+
 app.use(express.json())
+
+app.use('/auth', auth)
 
 app.get('/', (request, response) => {
   console.log(request.ip)
@@ -36,6 +49,10 @@ app.get('/clientes/:id', async (request, response) => {
   } = request.params
 
   try {
+    if (!request.session.loggedin) {
+      response.status(404).json({ msj: 'Debes autenticate para realizar la consulta' })
+      throw new Error('Debes autenticate para realizar la consulta')
+    }
     const objtsujeto = await DbModels.tbcliente.findByPk(id, {
       where: {
         statuscli_id: 5
@@ -58,6 +75,10 @@ app.get('/clientes/:id', async (request, response) => {
 
 app.get('/clientes', async (request, response) => {
   try {
+    if (!request.session.loggedin) {
+      response.status(404).json({ msj: 'Debes autenticate para realizar la consulta' })
+      throw new Error('Debes autenticate para realizar la consulta')
+    }
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
         statuscli_id: 5

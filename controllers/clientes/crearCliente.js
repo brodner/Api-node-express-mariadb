@@ -7,6 +7,10 @@ postClientes.post('/', async (req, res) => {
   const date = new Date()
   const dateComplite = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   try {
+    if (!req.session.loggedin) {
+      throw new Error('Debes autenticate para realizar la consulta')
+    }
+
     const [cliente, existeCliente] = await DbModels.tbcliente.findOrCreate({
       where: {
         [Op.or]: [
@@ -40,8 +44,8 @@ postClientes.post('/', async (req, res) => {
         cliente_ape2: contenido.segundoApellido,
         cliente_fcreacion: dateComplite,
         cliente_fnac: contenido.fechaNacimiento,
-        statuscli_id: '1',
-        sucursal_id: '1',
+        statuscli_id: '5',
+        sucursal_id: '5',
         tipoide_id: contenido.tipoide
       }
     })
