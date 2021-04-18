@@ -1,1 +1,2 @@
 GET http://localhost:5000/clientes/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFN1Y3Vyc2FsIjo1LCJ1c2VybmFtZSI6IlNVQ1VSU0FMMSIsImlhdCI6MTYxODcxMDY3OSwiZXhwIjoxNjIxODIxMDc5fQ.mLcfIkMU0VKyHioXkG-estc1uYUQJ2E1vVt1iQ6Dyc
