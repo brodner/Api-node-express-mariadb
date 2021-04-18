@@ -6,7 +6,7 @@ const app = express()
 const { DbModels, sequelize } = require('./modelos/db.config')
 const crearCliente = require('./controllers/clientes/crearCliente')
 const auth = require('./controllers/usuarios/auth')
-
+const tokenExtractor = require('./middleware/tokerExtractor')
 const PORT = process.env.PORT || 5000
 app.use(cors())
 
@@ -43,16 +43,12 @@ app.use(async (request, response, next) => {
 
 app.use('/clientes/', crearCliente)
 
-app.get('/clientes/:id', async (request, response) => {
+app.get('/clientes/:id', tokenExtractor, async (request, response, next) => {
   const {
     id
   } = request.params
 
   try {
-    if (!request.session.loggedin) {
-      response.status(404).json({ msj: 'Debes autenticate para realizar la consulta' })
-      throw new Error('Debes autenticate para realizar la consulta')
-    }
     const objtsujeto = await DbModels.tbcliente.findByPk(id, {
       where: {
         statuscli_id: 5
@@ -69,16 +65,12 @@ app.get('/clientes/:id', async (request, response) => {
       dataSujeto
     )
   } catch (error) {
-    response.status(404).json(error)
+    response.status(401).json(error)
   }
 })
 
-app.get('/clientes', async (request, response) => {
+app.get('/clientes', tokenExtractor, async (request, response) => {
   try {
-    if (!request.session.loggedin) {
-      response.status(404).json({ msj: 'Debes autenticate para realizar la consulta' })
-      throw new Error('Debes autenticate para realizar la consulta')
-    }
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
         statuscli_id: 5
@@ -95,7 +87,7 @@ app.get('/clientes', async (request, response) => {
     )
   } catch (error) {
     console.log(error)
-    response.status(404).json(error.name)
+    response.status(401).json(error.name)
   }
 })
 

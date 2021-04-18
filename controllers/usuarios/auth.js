@@ -1,4 +1,5 @@
 const auth = require('express').Router()
+const jwt = require('jsonwebtoken')
 const { DbModels } = require('../../modelos/db.config')
 const { Op } = require('sequelize')
 
@@ -6,28 +7,17 @@ auth.all('/', async (request, response) => {
   try {
     const { token, user } = request.body
 
-    if (request.session.loggedin !== 'undefined' && request.session.loggedin) {
-      response.status(200).json({
-        msj: 'ya estas logueado'
-      })
-      throw new Error('esta logueado')
-    }
-
     if (!token && !user) {
-      response.status(400).json({
+      response.status(401).json({
         error: 'No puedes realizar una consulta sin "token" comunicate con el administrador para que te proporcione una'
       })
-      throw new Error('No puedes realizar una consulta sin "token"')
     }
 
     const sucursal = await DbModels.tbsucursal.findOne({
       where: {
-        [Op.and]: [{
-          sucursal_token: token
-        },
-        {
-          sucursal_nombre: user
-        }
+        [Op.and]: [
+          { sucursal_token: token },
+          { sucursal_nombre: user }
         ]
       }
     })
@@ -36,13 +26,25 @@ auth.all('/', async (request, response) => {
       response.status(401).json({
         msj: 'usuario o token incorrecto por favor verifica'
       })
-      throw new Error('no encontrado')
     }
-    request.session.loggedin = true
-    request.session.idSucursal = sucursal.sucursal_id
-    request.session.username = sucursal.sucursal_nombre
+
+    const userForToken = {
+      idSucursal: sucursal.sucursal_id,
+      username: sucursal.sucursal_nombre
+    }
+
+    const tokenRequest = jwt.sign(
+      userForToken,
+      process.env.SECRET,
+      {
+        expiresIn: '36d'
+      }
+    )
+
     response.status(200).json({
-      msj: 'logueado con exito'
+      name: sucursal.sucursal_id,
+      username: sucursal.sucursal_nombre,
+      tokenRequest
     })
   } catch (error) {
     console.log(error)
