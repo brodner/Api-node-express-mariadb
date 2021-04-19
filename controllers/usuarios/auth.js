@@ -11,6 +11,7 @@ auth.all('/', async (request, response) => {
       response.status(401).json({
         error: 'No puedes realizar una consulta sin "token" comunicate con el administrador para que te proporcione una'
       })
+      throw Error('contraseña o usuario no encontrado o no enviado')
     }
 
     const sucursal = await DbModels.tbsucursal.findOne({
