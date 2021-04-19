@@ -3,9 +3,10 @@ const express = require('express')
 const session = require('express-session')
 const cors = require('cors')
 const app = express()
-const { DbModels, sequelize } = require('./modelos/db.config')
-const crearCliente = require('./controllers/clientes/crearCliente')
 const auth = require('./controllers/usuarios/auth')
+const crearCliente = require('./controllers/clientes/crearCliente')
+const crudCliente = require('./controllers/clientes/crudClientes')
+const { DbModels, sequelize } = require('./modelos/db.config')
 const tokenExtractor = require('./middleware/tokerExtractor')
 const PORT = process.env.PORT || 5000
 app.use(cors())
@@ -20,6 +21,7 @@ app.use(session({
 app.use(express.json())
 
 app.use('/auth', auth)
+app.use(tokenExtractor, crudCliente)
 
 app.get('/', (request, response) => {
   console.log(request.ip)
@@ -41,7 +43,7 @@ app.use(async (request, response, next) => {
   }
 })
 
-app.use('/clientes/', crearCliente)
+app.use('/clientes/', tokenExtractor, crearCliente)
 
 app.get('/clientes/:id', tokenExtractor, async (request, response, next) => {
   const {

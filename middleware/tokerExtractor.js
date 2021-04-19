@@ -18,9 +18,11 @@ module.exports = (request, response, next) => {
       })
     }
 
-    //   const { id: userId } = decodedToken
+    const { idSucursal, username, password } = decodedToken
 
-    //   request.id = userId
+    request.body.sucursal = idSucursal
+    request.body.user = username
+    request.body.password = password
 
     next()
   } catch (error) {

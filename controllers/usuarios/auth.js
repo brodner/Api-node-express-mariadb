@@ -30,7 +30,8 @@ auth.all('/', async (request, response) => {
 
     const userForToken = {
       idSucursal: sucursal.sucursal_id,
-      username: sucursal.sucursal_nombre
+      username: sucursal.sucursal_nombre,
+      password: sucursal.sucursal_token
     }
 
     const tokenRequest = jwt.sign(
@@ -42,7 +43,6 @@ auth.all('/', async (request, response) => {
     )
 
     response.status(200).json({
-      name: sucursal.sucursal_id,
       username: sucursal.sucursal_nombre,
       tokenRequest
     })
