@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
     "token":"qwerty",
-    "user":"SUCURSAL1"
+    "user":"SUCURSAL"
 }
