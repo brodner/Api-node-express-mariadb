@@ -8,10 +8,7 @@ auth.all('/', async (request, response) => {
     const { token, user } = request.body
 
     if (!token && !user) {
-      response.status(401).json({
-        error: 'No puedes realizar una consulta sin "token" comunicate con el administrador para que te proporcione una'
-      })
-      throw Error('contraseña o usuario no encontrado o no enviado')
+      throw Error('tokenOrUser')
     }
 
     const sucursal = await DbModels.tbsucursal.findOne({
@@ -24,9 +21,7 @@ auth.all('/', async (request, response) => {
     })
 
     if (!sucursal) {
-      response.status(401).json({
-        msj: 'usuario o token incorrecto por favor verifica'
-      })
+      throw Error('tokenOrUser')
     }
 
     const userForToken = {
@@ -48,8 +43,12 @@ auth.all('/', async (request, response) => {
       tokenRequest
     })
   } catch (error) {
-    console.log(error)
-    response.json(error)
+    console.log(error.message)
+    if (error.message === 'tokenOrUser') {
+      response.status(401).json({
+        error: 'usuario o contraseña invalido'
+      })
+    }
   }
 })
 
