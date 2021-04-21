@@ -19,19 +19,12 @@ dbConect.connect(function (err) {
   }
 })
 
-// const dbConect = require('../database')
-// router.get('/', (req, res) => {
-//   res.json({
-//     status: 'consumiendo'
-//   })
-// })
-
-router.get('/clientes/consulta', (req, res) => {
+router.get('/clientes/consulta/:dpi', (req, res) => {
   const {
-    dpi,
     user,
     password
   } = req.body
+  const { dpi } = req.params
   console.log(user, password)
   const query = `
     SET @dpi = ?;
@@ -41,6 +34,7 @@ router.get('/clientes/consulta', (req, res) => {
     `
   dbConect.query(query, [dpi, user, password], (error, rows) => {
     if (!error) {
+      console.log(rows)
       res.json(rows[3][0])
     } else {
       console.log(error)

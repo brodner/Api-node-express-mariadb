@@ -43,7 +43,7 @@ auth.all('/', async (request, response) => {
       tokenRequest
     })
   } catch (error) {
-    console.log(error.message)
+    console.log(request.body)
     if (error.message === 'tokenOrUser') {
       response.status(401).json({
         error: 'usuario o contraseña invalido'

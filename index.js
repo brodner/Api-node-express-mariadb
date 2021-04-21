@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const session = require('express-session')
 const cors = require('cors')
 const app = express()
 const auth = require('./controllers/usuarios/auth')
@@ -11,30 +10,24 @@ const tokenExtractor = require('./middleware/tokerExtractor')
 const PORT = process.env.PORT || 5000
 app.use(cors())
 
-app.use(session({
-  secret: 'central Banco-Vivienda',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 }
-}))
-
 app.use(express.json())
+app.use(express.static('public'))
 
 app.use('/auth', auth)
-app.use(tokenExtractor, crudCliente)
 
 app.get('/', (request, response) => {
   console.log(request.ip)
   console.log(request.ips)
   console.log(request.originalUrl)
-  response.send('<h1>API WEB BANCO DE VIVIENDA</h1>')
+  response.location('./public')
 })
+
+app.use(tokenExtractor, crudCliente)
 
 app.use(async (request, response, next) => {
   try {
     await sequelize.authenticate()
     console.log('Connection has been established successfully.')
-    next()
   } catch (error) {
     console.error('Unable to connect to the database:', error)
     response.status(404).json({
@@ -45,7 +38,7 @@ app.use(async (request, response, next) => {
 
 app.use('/clientes/', tokenExtractor, crearCliente)
 
-app.get('/clientes/:id', tokenExtractor, async (request, response, next) => {
+app.get('/clientes/:id', tokenExtractor, async (request, response) => {
   const {
     id
   } = request.params
@@ -63,11 +56,11 @@ app.get('/clientes/:id', tokenExtractor, async (request, response, next) => {
       }
     })
     const dataSujeto = await objtsujeto.dataValues
-    response.json(
+    response.status(201).json(
       dataSujeto
     )
   } catch (error) {
-    response.status(401).json(error)
+    response.status(404).json(error)
   }
 })
 
@@ -84,12 +77,12 @@ app.get('/clientes', tokenExtractor, async (request, response) => {
         }
       }
     })
-    response.json(
+    response.status(201).json(
       objtsujeto
     )
   } catch (error) {
     console.log(error)
-    response.status(401).json(error.name)
+    response.status(404).json(error.name)
   }
 })
 
