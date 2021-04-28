@@ -13,7 +13,7 @@ module.exports = (request, response, next) => {
 
     if (!token || !decodedToken.idSucursal) {
       console.log('Error')
-      return response.status(401).json({
+      return response.status('401').json({
         error: 'token missing or invalid'
       })
     }
@@ -29,7 +29,7 @@ module.exports = (request, response, next) => {
     console.log(error.message)
     if (error.message === 'jwt must be provided' ||
         error.message === 'invalid signature') {
-      response.status(401).json({
+      response.status('401').json({
         error: 'token missing or invalid'
       })
     }

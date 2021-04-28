@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken')
 const { DbModels } = require('../../modelos/db.config')
 const { Op } = require('sequelize')
 
-auth.all('/', async (request, response) => {
+auth.post('/', async (request, response) => {
   try {
     const { token, user } = request.body
-
+    console.log(request.body)
     if (!token && !user) {
       throw Error('tokenOrUser')
     }
@@ -43,9 +43,9 @@ auth.all('/', async (request, response) => {
       tokenRequest
     })
   } catch (error) {
-    console.log(request.body)
+    console.log(error.message)
     if (error.message === 'tokenOrUser') {
-      response.status(401).json({
+      response.status('401').json({
         error: 'usuario o contraseña invalido'
       })
     }

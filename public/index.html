@@ -61,7 +61,7 @@
                         role="navigation">
                         <ul class="nav">
                             <li><a href="#primerosPasos">Primeros Pasos</a></li>
-                            <li><a href="#">link</a></li>
+                            <li><a href="#GET">Get EndPoints</a></li>
                             <li><a href="#">link</a></li>
                             <li><a href="#">link</a></li>
                             <li><a href="#">link</a></li>
@@ -114,15 +114,17 @@
                                 <p>Para acceder a los distintos metodos de la API es necesario un token que se le
                                     proporcionara al encargado de cada sucursal.</p>
                                 <h4>Ejemplo:</h4>
-                                <pre class="brush: javascript">
-                                    fetch("https://Banco-vivienda.club/clientes/113", {
-                                        "method": "GET",
-                                        "headers": {
-                                          "user-agent": "vscode-restclient",
+                                <pre class="brush: javascript; highlight: [1,3,4,5,6]">
+                                    fetch("https://Banco-vivienda.club/clientes/113", { // recordar colocar https
+                                        "headers": { 
+                                          "Accept": "application/json",
                                           "authorization": "Bearer {YOUR_TOKEN}" 
                                           // esta es la forma de enviar su token atravez de la 
                                           //cabecera authorization y anteponer Bearer
                                         }
+                                      })
+                                      .then(response => {
+                                          response.json()
                                       })
                                       .then(response => {
                                         console.log(response);
@@ -131,8 +133,8 @@
                                         console.error(err);
                                       });
                                 </pre>
-                                <h4 class="pb-0">Esto nos devuelve lo siguiente</h4>
-                                <pre class="brush javascript">
+                                <h4>Esto nos devuelve lo siguiente:</h4>
+                                <pre class="brush: javascript">
                                     {
                                         "cliente_id": 113,
                                         "cliente_ide": "1234",
@@ -181,6 +183,55 @@
                                           "tipoide_cod": "DPI"
                                         }
                                       }
+                                </pre>
+                                <blockquote>
+                                    <p>El endpoint anterior utilizamos el id del cliente para realizar la busqueda</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="GET">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2>GET EndPoints</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-m-d12">
+                                <p>Ahora veremos la busqueda por medio del DPI</p>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/clientes/consulta/21781889", {
+                                        "headers": {
+                                            'Accept': 'application/json',
+                                            "authorization": "Bearer { YOUR_TOKEN }"
+                                        }
+                                    })
+                                        .then(response => {
+                                            response.json()
+                                        })
+                                        .then(response => {
+                                            console.log(response);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                </pre>
+                                <pre class="brush:javascript; highlight: [4]">
+                                    //Resultado:
+                                    {
+                                        "cliente_id": 148,
+                                        "cliente_ide": "21781889", // DPI
+                                        "cliente_nombre1": "Brodner",
+                                        "cliente_ape1": "Morales",
+                                        "cliente_ape2": "Arevalo",
+                                        "cliente_fcreacion": "2021-04-14T06:00:00.000Z",
+                                        "cliente_fnac": "1992-02-01T06:00:00.000Z",
+                                        "statuscli_id": 5,
+                                        "sucursal_id": 5,
+                                        "cliente_op1": null,
+                                        "cliente_op2": null,
+                                        "tipoide_id": 1
+                                    }
                                 </pre>
                             </div>
                         </div>

@@ -28,6 +28,7 @@ app.use(async (request, response, next) => {
   try {
     await sequelize.authenticate()
     console.log('Connection has been established successfully.')
+    next()
   } catch (error) {
     console.error('Unable to connect to the database:', error)
     response.status(404).json({
@@ -56,11 +57,11 @@ app.get('/clientes/:id', tokenExtractor, async (request, response) => {
       }
     })
     const dataSujeto = await objtsujeto.dataValues
-    response.status(201).json(
+    response.status('201').json(
       dataSujeto
     )
   } catch (error) {
-    response.status(404).json(error)
+    response.status('404').json(error)
   }
 })
 
