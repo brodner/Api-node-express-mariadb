@@ -61,10 +61,10 @@
                         role="navigation">
                         <ul class="nav">
                             <li><a href="#primerosPasos">Primeros Pasos</a></li>
-                            <li><a href="#GET">Get EndPoints</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
+                            <li><a href="#GET">GET</a></li>
+                            <li><a href="#POST">POST</a></li>
+                            <li><a href="#PUT">PUT</a></li>
+                            <li><a href="#DELETE">DELETE</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -118,13 +118,13 @@
                                     fetch("https://Banco-vivienda.club/clientes/113", { // recordar colocar https
                                         "headers": { 
                                           "Accept": "application/json",
-                                          "authorization": "Bearer {YOUR_TOKEN}" 
+                                          "authorization": "Bearer YOUR_TOKEN" 
                                           // esta es la forma de enviar su token atravez de la 
                                           //cabecera authorization y anteponer Bearer
                                         }
                                       })
                                       .then(response => {
-                                          response.json()
+                                         return response.json()
                                       })
                                       .then(response => {
                                         console.log(response);
@@ -193,7 +193,7 @@
                     <section id="GET">
                         <div class="row">
                             <div class="col-md-12 left-align">
-                                <h2>GET EndPoints</h2>
+                                <h2>GET</h2>
                             </div>
                         </div>
                         <div class="row">
@@ -203,11 +203,11 @@
                                     fetch("https://banco-vivienda.club/clientes/consulta/21781889", {
                                         "headers": {
                                             'Accept': 'application/json',
-                                            "authorization": "Bearer { YOUR_TOKEN }"
+                                            "authorization": "Bearer  YOUR_TOKEN"
                                         }
                                     })
                                         .then(response => {
-                                            response.json()
+                                            return response.json()
                                         })
                                         .then(response => {
                                             console.log(response);
@@ -231,6 +231,142 @@
                                         "cliente_op1": null,
                                         "cliente_op2": null,
                                         "tipoide_id": 1
+                                    }
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="POST">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2>POST</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <p>Creacion de cliente</p>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/clientes/registro", {
+                                        "method": "POST",
+                                        "headers": {
+                                            "content-type": "application/json",
+                                            'Accept': 'application/json',
+                                            "authorization": "Bearer YOUR_TOKEN"
+                                        },
+                                        body: JSON.stringify({
+                                            "dpi": 1478523690122,
+                                            "name": "Meral", // - no dejarlo en blanco 
+                                            "lastNameOne": "Sai", // - no dejarlo en blanco 
+                                            "lastNameTwo": "Mad", // - no dejarlo en blanco 
+                                            "typeIde": 1, //- no dejarlo en blanco 
+                                            "bornDate": "1990-02-01" //- no dejarlo en blanco 
+                                        })
+                                    })
+                                        .then(
+                                            response => response.json()
+                                        )
+                                        .then(response => {
+                                            console.log(response);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                </pre>
+                                <pre class="brush:javascript">
+                                    // Resultado
+                                      {
+                                        "Level": "SP",
+                                        "Code": 100,
+                                        "Message": "proceso exitoso"
+                                      }
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="PUT">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2>PUT</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <p>Actualizacion de informacion del cliente</p>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/clientes/actualizacion", {
+                                        "method": "PUT",
+                                        "headers": {
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN",
+                                            'Accept': 'application/json'
+                                        },
+                                        "body": JSON.stringify({
+                                            "dpi": 1478523690122, // obligatorio
+                                            "name": "Meral", // obligatorio - no dejarlo en blanco 
+                                            "lastNameOne": "Sain", // obligatorio - no dejarlo en blanco 
+                                            "lastNameTwo": "Mad", // obligatorio - no dejarlo en blanco 
+                                            "typeIde": 1, // obligatorio - no dejarlo en blanco 
+                                            "bornDate": "1990-02-28" // obligatorio - no dejarlo en blanco 
+                                        })
+                                    })
+                                        .then(
+                                            response => response.json()
+                                        )
+                                        .then(response => {
+                                            console.log(response);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                </pre>
+                                <pre class="brush:javascript">
+                                    // Resultado
+                                    {
+                                        "Level":"SP",
+                                        "Code":100,
+                                        "Message":"proceso exitoso"
+                                    }
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="DELETE">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2>DELETE</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <p>Eliminacion de cliente por DPI</p>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/clientes/administracion", {
+                                        "method": "DELETE",
+                                        "headers": {
+                                            'Accept': 'application/json',
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN"
+                                        },
+                                        "body": JSON.stringify({
+                                            "dpi": 21781889
+                                        })
+                                    })
+                                        .then(
+                                            response => response.json()
+                                        )
+                                        .then(response => {
+                                            console.log(response);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                </pre>
+                                <pre class="brush:javascript">
+                                    //Resultado
+                                    {
+                                        "Level":"SP",
+                                        "Code":402,
+                                        "Message":"cliente ya está eliminado"
                                     }
                                 </pre>
                             </div>

@@ -1,0 +1,12 @@
+PUT https://banco-vivienda.club/clientes/actualizacion HTTP/1.1
+Content-Type: application/json
+Authorization: 
+
+{   
+    "dpi": 1478523690122,
+    "name": "Meral",
+    "lastNameOne": "Sain",
+    "lastNameTwo": "Mad",
+    "typeIde": 1,
+    "bornDate": "1990-02-28"
+}
