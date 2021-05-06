@@ -19,6 +19,9 @@ dbConect.connect(function (err) {
   }
 })
 
+/**
+ * ingresamos pago 
+ */
 router.post('/creditos/ingresar', (req, res) => {
   const {
     id_credito,
@@ -32,11 +35,133 @@ router.post('/creditos/ingresar', (req, res) => {
   dbConect.query(query, [id_credito,monto], (error, rows) => {
     if (!error) {
       console.log(rows)
-      res.json(rows[3][0])
+      res.json(rows[2][0])
     } else {
       console.log(error)
     }
   })
+})
+
+/**
+ * inserta la solictud de credito para ser preautoriza (se autoriza al instante)
+ * cred_tipo [credito_cod]
+ */
+router.post('/creditos/registrar', (req, res) => {
+  const {
+    dpi,
+    descripcion,
+    monto,
+    diapago,
+    cred_tipo,
+    sucursal
+  } = req.body
+  const query = `
+    SET @operacion = 1;
+    SET @id = '';
+    SET @dpi = ?;
+    SET @descripcion = ?;
+    SET @monto = ?;
+    SET @diapago = ?;
+    SET @sucursal = ?;
+    SET @cred_tipo = ?;
+    CALL sp_mant_clientes(@operacion,@id, @dpi, @descripcion, @monto,@diapago, @cred_tipo, @sucursal);
+    `
+  dbConect.query(
+    query,
+    [
+        dpi,
+        descripcion,
+        monto,
+        diapago,
+        cred_tipo,
+        sucursal
+    ],
+    (error, rows) => {
+      if (!error) {
+        res.json(rows[3][0])
+      } else {
+        console.log(error)
+      }
+    }
+  )
+})
+/** 
+ * 
+*/
+router.put('/creditos/actualizar', (req, res) => {
+    const {
+        id,
+        dpi,
+        descripcion,
+        diapago,
+        cred_tipo,
+        sucursal
+      } = req.body
+      const query = `
+        SET @operacion = 3;
+        SET @id = ?;
+        SET @dpi = ?;
+        SET @descripcion = ?;
+        SET @monto = '';
+        SET @diapago = ?;
+        SET @sucursal = ?;
+        SET @cred_tipo = ?;
+        CALL sp_mant_clientes(@operacion,@id, @dpi, @descripcion, @monto,@diapago, @cred_tipo, @sucursal);
+        `
+  dbConect.query(
+    query,
+    [
+        id,
+        dpi,
+        descripcion,
+        diapago,
+        cred_tipo,
+        sucursal
+    ],
+    (error, rows) => {
+      if (!error) {
+        res.json(rows[3][0])
+      } else {
+        res.json(error)
+        console.log(error)
+      }
+    }
+  )
+})
+
+router.delete('/creditos/eliminar', (req, res) => {
+    const {
+        id,
+        dpi,
+        sucursal
+      } = req.body
+      const query = `
+        SET @operacion = 2;
+        SET @id = ?;
+        SET @dpi = ?;
+        SET @desc = '';
+        SET @monto = '';
+        SET @diapago ='';
+        SET @sucursal = '';
+        SET @cred_tipo = '';
+        CALL sp_mant_clientes(@operacion,@id, @dpi, @desc, @monto,@diapago, @cred_tipo, @sucursal);
+        `
+  dbConect.query(
+    query,
+    [
+        id,
+        dpi,
+        sucursal
+    ],
+    (error, rows) => {
+      if (!error) {
+        res.json(rows[3][0])
+      } else {
+        res.json(error)
+        console.log(error)
+      }
+    }
+  )
 })
 
 module.exports = router
