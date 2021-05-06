@@ -69,16 +69,17 @@ router.post('/creditos/registrar', (req, res) => {
   dbConect.query(
     query,
     [
-        dpi,
-        descripcion,
-        monto,
-        diapago,
-        cred_tipo,
-        sucursal
+      dpi,
+      descripcion,
+      monto,
+      diapago,
+      cred_tipo,
+      sucursal
     ],
     (error, rows) => {
       if (!error) {
-        res.json(rows[3][0])
+        console.log(rows)
+        res.json(rows[2][0])
       } else {
         console.log(error)
       }
@@ -89,15 +90,15 @@ router.post('/creditos/registrar', (req, res) => {
  * 
 */
 router.put('/creditos/actualizar', (req, res) => {
-    const {
-        id,
-        dpi,
-        descripcion,
-        diapago,
-        cred_tipo,
-        sucursal
-      } = req.body
-      const query = `
+  const {
+    id,
+    dpi,
+    descripcion,
+    diapago,
+    cred_tipo,
+    sucursal
+  } = req.body
+  const query = `
         SET @operacion = 3;
         SET @id = ?;
         SET @dpi = ?;
@@ -111,16 +112,17 @@ router.put('/creditos/actualizar', (req, res) => {
   dbConect.query(
     query,
     [
-        id,
-        dpi,
-        descripcion,
-        diapago,
-        cred_tipo,
-        sucursal
+      id,
+      dpi,
+      descripcion,
+      diapago,
+      cred_tipo,
+      sucursal
     ],
     (error, rows) => {
       if (!error) {
-        res.json(rows[3][0])
+        console.log(rows)
+        res.json(rows[2][0])
       } else {
         res.json(error)
         console.log(error)
@@ -130,12 +132,12 @@ router.put('/creditos/actualizar', (req, res) => {
 })
 
 router.delete('/creditos/eliminar', (req, res) => {
-    const {
-        id,
-        dpi,
-        sucursal
-      } = req.body
-      const query = `
+  const {
+    id,
+    dpi,
+    sucursal
+  } = req.body
+  const query = `
         SET @operacion = 2;
         SET @id = ?;
         SET @dpi = ?;
@@ -149,13 +151,14 @@ router.delete('/creditos/eliminar', (req, res) => {
   dbConect.query(
     query,
     [
-        id,
-        dpi,
-        sucursal
+      id,
+      dpi,
+      sucursal
     ],
     (error, rows) => {
       if (!error) {
-        res.json(rows[3][0])
+        console.log(rows)
+        res.json(rows[2][0])
       } else {
         res.json(error)
         console.log(error)
