@@ -1,2 +1,6 @@
 node_modules
 .env
+REST/auth.rest
+REST/delete-clientes-administracion.rest
+REST/get-clientes-consulta.rest
+REST/get-sujeto-id.rest

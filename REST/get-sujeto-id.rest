@@ -1,2 +1,2 @@
-GET https://banco-vivienda.club/clientes/113 HTTP/1.1
-Authorization: Bearer 
+GET https://banco-vivienda.club/clientes/152 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFN1Y3Vyc2FsIjo5LCJ1c2VybmFtZSI6IlNVQ1VSU0FMNSIsInBhc3N3b3JkIjoiQUJDMTIzKioiLCJpYXQiOjE2MjAyNDEwNDUsImV4cCI6MTYyMzM1MTQ0NX0.DcHFeq1nUt4jvetckoWg9uwqwWI3XwYYNKkF20sXRO8

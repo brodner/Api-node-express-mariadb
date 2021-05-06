@@ -5,6 +5,7 @@ const app = express()
 const auth = require('./controllers/usuarios/auth')
 const crearCliente = require('./controllers/clientes/crearCliente')
 const crudCliente = require('./controllers/clientes/crudClientes')
+const creditos = require('./controllers/creditos/IngCreditos')
 const { DbModels, sequelize } = require('./modelos/db.config')
 const tokenExtractor = require('./middleware/tokerExtractor')
 const PORT = process.env.PORT || 5000
@@ -23,6 +24,8 @@ app.get('/', (request, response) => {
 })
 
 app.use(tokenExtractor, crudCliente)
+
+app.use(tokenExtractor, creditos)
 
 app.use(async (request, response, next) => {
   try {

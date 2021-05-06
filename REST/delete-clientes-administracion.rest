@@ -1,7 +1,7 @@
 DELETE https://banco-vivienda.club/clientes/administracion HTTP/1.1
 Content-Type: application/json
-Authorization: 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFN1Y3Vyc2FsIjo5LCJ1c2VybmFtZSI6IlNVQ1VSU0FMNSIsInBhc3N3b3JkIjoiQUJDMTIzKioiLCJpYXQiOjE2MjAyNDEwNDUsImV4cCI6MTYyMzM1MTQ0NX0.DcHFeq1nUt4jvetckoWg9uwqwWI3XwYYNKkF20sXRO8
 
 {
-    "dpi": 21781889
+    "dpi": 1478523690122
 }
