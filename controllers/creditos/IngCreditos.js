@@ -62,8 +62,8 @@ router.post('/creditos/registrar', (req, res) => {
     SET @descripcion = ?;
     SET @monto = ?;
     SET @diapago = ?;
-    SET @sucursal = ?;
     SET @cred_tipo = ?;
+    SET @sucursal = ?;
     CALL sp_mant_credito(@operacion,@id, @dpi, @descripcion, @monto,@diapago, @cred_tipo, @sucursal);
     `
   dbConect.query(
@@ -104,8 +104,8 @@ router.put('/creditos/actualizar', (req, res) => {
         SET @descripcion = ?;
         SET @monto = '';
         SET @diapago = ?;
-        SET @sucursal = ?;
         SET @cred_tipo = ?;
+        SET @sucursal = ?;
         CALL sp_mant_credito(@operacion,@id, @dpi, @descripcion, @monto,@diapago, @cred_tipo, @sucursal);
         `
   dbConect.query(
@@ -142,8 +142,8 @@ router.delete('/creditos/eliminar', (req, res) => {
         SET @desc = '';
         SET @monto = '';
         SET @diapago ='';
-        SET @sucursal = '';
         SET @cred_tipo = '';
+        SET @sucursal = '';
         CALL sp_mant_credito(@operacion,@id, @dpi, @desc, @monto,@diapago, @cred_tipo, @sucursal);
         `
   dbConect.query(
