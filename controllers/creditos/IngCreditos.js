@@ -76,10 +76,11 @@ router.post('/creditos/registrar', (req, res) => {
       cred_tipo,
       sucursal
     ],
-    (error, rows) => {
+    (error, rows, fields) => {
       if (!error) {
         console.log(rows)
-        res.json(rows[2][0])
+        console.log(typeof (rows))
+        res.json(rows)
       } else {
         console.log(error)
       }
