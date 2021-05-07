@@ -147,7 +147,7 @@ router.delete('/creditos/eliminar', (req, res) => {
         SET @monto = 0;
         SET @diapago ='';
         SET @cred_tipo = '';
-        SET @sucursal = '';
+        SET @sucursal = ?;
         CALL sp_mant_credito(@operacion,@id, @dpi, @desc, @monto,@diapago, @cred_tipo, @sucursal);
         `
   dbConect.query(
