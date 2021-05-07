@@ -35,7 +35,7 @@ router.post('/creditos/ingresarpago', (req, res) => {
   dbConect.query(query, [id_credito,monto], (error, rows) => {
     if (!error) {
       console.log(rows)
-      res.json(rows[8][0])
+      res.json(rows[2][0])
     } else {
       console.log(error)
     }
