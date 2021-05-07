@@ -66,6 +66,8 @@ router.post('/creditos/registrar', (req, res) => {
     SET @sucursal = ?;
     CALL sp_mant_credito(@operacion,@id, @dpi, @descripcion, @monto,@diapago, @cred_tipo, @sucursal);
     `
+
+    let data= 
   dbConect.query(
     query,
     [
@@ -79,8 +81,8 @@ router.post('/creditos/registrar', (req, res) => {
     (error, rows, fields) => {
       if (!error) {
         console.log(rows)
-        console.log(typeof (rows))
-        res.json(rows.RowDataPacket)
+        console.log(rows.find(obj => obj.name == 'RowDataPacket'))
+        res.json(rows)
       } else {
         console.log(error)
       }
