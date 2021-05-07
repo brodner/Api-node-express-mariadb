@@ -124,7 +124,7 @@ router.put('/creditos/actualizar', (req, res) => {
     (error, rows) => {
       if (!error) {
         console.log(rows)
-        res.json(rows[2][0])
+        res.json(rows[8][0])
       } else {
         res.json(error)
         console.log(error)
@@ -160,7 +160,7 @@ router.delete('/creditos/eliminar', (req, res) => {
     (error, rows) => {
       if (!error) {
         console.log(rows)
-        res.json(rows[2][0])
+        res.json(rows[8][0])
       } else {
         res.json(error)
         console.log(error)
