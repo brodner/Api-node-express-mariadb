@@ -1,5 +1,5 @@
 const dbConfig = require('../db.conf.js')
-const Sequelize = require('sequelize')
+const { Sequelize, Op } = require('sequelize')
 const initModels = require('./init-models')
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -18,4 +18,4 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const DbModels = initModels(sequelize)
 
-module.exports = { DbModels, sequelize }
+module.exports = { DbModels, sequelize, Op }

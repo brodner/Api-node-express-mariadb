@@ -6,7 +6,7 @@ const auth = require('./controllers/usuarios/auth')
 const crearCliente = require('./controllers/clientes/crearCliente')
 const crudCliente = require('./controllers/clientes/crudClientes')
 const creditos = require('./controllers/creditos/IngCreditos')
-const { DbModels, sequelize } = require('./modelos/db.config')
+const { DbModels, sequelize, Op } = require('./modelos/db.config')
 const tokenExtractor = require('./middleware/tokerExtractor')
 const PORT = process.env.PORT || 5000
 app.use(cors())
@@ -50,12 +50,13 @@ app.get('/clientes/:id', tokenExtractor, async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findByPk(id, {
       where: {
-        statuscli_id: 5
+        statuscli_id: 5,
+        statuscred_id: 5
       },
       include: {
         all: true,
         attributes: {
-          exclude: ['sucursal_token', 'tipoide_dsc']
+          exclude: ['sucursal_token']
         }
       }
     })
@@ -72,12 +73,13 @@ app.get('/clientes', tokenExtractor, async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
-        statuscli_id: 5
+        statuscli_id: 5,
+        statuscred_id: 5
       },
       include: {
         all: true,
         attributes: {
-          exclude: ['sucursal_token', 'tipoide_dsc']
+          exclude: ['sucursal_token']
         }
       }
     })

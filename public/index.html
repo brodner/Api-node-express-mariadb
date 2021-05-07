@@ -384,6 +384,44 @@
                                         "Message":"proceso exitoso"
                                     }
                                 </pre>
+                                <h3>Actualizacion de Informacion de Credito</h3>
+                                <pre class="brush:javascript">
+                                    /**
+                                    * observacion:
+                                    * el campo cred_tipo debe tener como parametros los siguiente tipos:
+                                    * tar_visa
+                                    * tar_master
+                                    * HIPOTECA
+                                    * PREST_10
+                                    * PREST_Colabor
+                                    * PREST_GEN_CTA_AHORRO
+                                    * CTA_MONE
+                                    */
+                                    fetch("https://banco-vivienda.club/creditos/actualizar", {
+                                        "method": "PUT",
+                                        "headers": {
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN",
+                                            'Accept': 'application/json'
+                                        },
+                                        "body": JSON.stringify({
+                                          "id": 1,
+                                          "dpi": 1234,
+                                          "descripcion": "tarjeta Visa ",
+                                          "diapago": 10,
+                                          "cred_tipo": "tar_master"
+                                        })
+                                      })
+                                      .then(
+                                            response => response.json()
+                                        )
+                                      .then(response => {
+                                        console.log(response);
+                                      })
+                                      .catch(err => {
+                                        console.error(err);
+                                      });
+                                </pre>
                             </div>
                         </div>
                     </section>
@@ -425,6 +463,30 @@
                                         "Code":402,
                                         "Message":"cliente ya está eliminado"
                                     }
+                                </pre>
+                                <h3>Eliminacion de Credito</h3>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/creditos/eliminar", {
+                                        "method": "DELETE",
+                                        "headers": {
+                                            'Accept': 'application/json',
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN"
+                                        },
+                                        "body": JSON.stringify({
+                                          "id": 1,
+                                          "dpi": 1234
+                                        })
+                                      })
+                                      .then(
+                                            response => response.json()
+                                        )
+                                      .then(response => {
+                                        console.log(response);
+                                      })
+                                      .catch(err => {
+                                        console.error(err);
+                                      });
                                 </pre>
                             </div>
                         </div>
