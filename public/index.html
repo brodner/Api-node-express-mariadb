@@ -280,6 +280,63 @@
                                         "Message": "proceso exitoso"
                                       }
                                 </pre>
+                                <h3>Creacion de Credito</h3>
+                                <pre class="brush:javascript">
+                                    /**
+                                    * observacion:
+                                    * el campo cred_tipo debe tener como parametros los siguiente tipos:
+                                    * tar_visa
+                                    * tar_master
+                                    * HIPOTECA
+                                    * PREST 10
+                                    * PREST Colabor
+                                    * PREST GEN CTA AHORRO
+                                    * CTA MONE
+                                    */
+                                    fetch("https://banco-vivienda.club/creditos/registrar", {
+                                        "method": "POST",
+                                        "headers": {
+                                            'Accept': 'application/json',
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN"
+                                        },
+                                        "body": JSON.stringify({
+                                          "dpi": 1247,
+                                          "descripcion": "tarjeta visa oro",
+                                          "monto": "1000",
+                                          "diapago": 20,
+                                          "cred_tipo": "tar_visa"
+                                        })
+                                      })
+                                      .then(response => {
+                                        console.log(response);
+                                      })
+                                      .catch(err => {
+                                        console.error(err);
+                                      });
+                                </pre>
+                                <h3>Pago credito</h3>
+                                <pre class="brush:javascript">
+                                    fetch("https://banco-vivienda.club/creditos/ingresarpago", {
+                                        "method": "POST",
+                                        "headers": {
+                                            'Accept': 'application/json',
+                                            "content-type": "application/json",
+                                            "authorization": "Bearer YOUR_TOKEN"
+                                        },
+                                        "body": JSON.stringify({
+                                            "id_credito": 4,
+                                            "monto": 200.1
+                                        })
+                                    })
+                                        .then(response => response.json())
+                                        .then(response => {
+                                            console.log(response);
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                        });
+                                </pre>
                             </div>
                         </div>
                     </section>
