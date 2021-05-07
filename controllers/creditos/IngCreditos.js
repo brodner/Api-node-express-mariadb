@@ -22,7 +22,7 @@ dbConect.connect(function (err) {
 /**
  * ingresamos pago
  */
-router.post('/creditos/ingresar', (req, res) => {
+router.post('/creditos/ingresarpago', (req, res) => {
   const {
     id_credito,
     monto
