@@ -50,8 +50,7 @@ app.get('/clientes/:id', tokenExtractor, async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findByPk(id, {
       where: {
-        statuscli_id: 5,
-        'tbcliente_creditos.statuscred_id': 5
+        statuscli_id: 5
       },
       include: {
         all: true,
@@ -73,8 +72,7 @@ app.get('/clientes', tokenExtractor, async (request, response) => {
   try {
     const objtsujeto = await DbModels.tbcliente.findAll({
       where: {
-        statuscli_id: 5,
-        'tbcliente_creditos.statuscred_id': 5
+        statuscli_id: 5
       },
       include: {
         all: true,
