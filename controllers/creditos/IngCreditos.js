@@ -80,7 +80,7 @@ router.post('/creditos/registrar', (req, res) => {
       if (!error) {
         console.log(rows)
         console.log(typeof (rows))
-        res.json(rows)
+        res.json(rows.RowDataPacket)
       } else {
         console.log(error)
       }
