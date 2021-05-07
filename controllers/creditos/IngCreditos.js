@@ -35,7 +35,7 @@ router.post('/creditos/ingresar', (req, res) => {
   dbConect.query(query, [id_credito,monto], (error, rows) => {
     if (!error) {
       console.log(rows)
-      res.json(rows[2][0])
+      res.json(rows[8][0])
     } else {
       console.log(error)
     }
@@ -81,8 +81,7 @@ router.post('/creditos/registrar', (req, res) => {
     (error, rows, fields) => {
       if (!error) {
         console.log(rows)
-        console.log(rows.find(obj => obj.name == 'RowDataPacket'))
-        res.json(rows)
+        res.json(rows[8][0])
       } else {
         console.log(error)
       }
